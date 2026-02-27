@@ -21,6 +21,7 @@ pub trait BloomFilter<Item: Hash> {
 /// When looking for an item, we hash its value and retrieve the boolean at index `hash(item) % CAPACITY`
 /// If it's `false` it's absolutely sure the item isn't present
 /// If it's `true` the item may be present, or maybe another one produces the same hash
+#[allow(dead_code)]
 #[derive(Debug)]
 struct BasicBloomFilter<const CAPACITY: usize> {
     vec: [bool; CAPACITY],
@@ -59,6 +60,7 @@ impl<Item: Hash, const CAPACITY: usize> BloomFilter<Item> for BasicBloomFilter<C
 /// We want to store `"Bloom"`. Its hash modulo `CAPACITY` is `5`. Which means we need to set `1` at the last index.
 /// It can be performed by doing `000000 | 000001`
 /// Meaning we can hash the item value, use a modulo to find the index, and do a binary `or` between the current number and the index
+#[allow(dead_code)]
 #[derive(Debug, Default)]
 struct SingleBinaryBloomFilter {
     fingerprint: u128, // let's use 128 bits, the equivalent of using CAPACITY=128 in the previous example
@@ -107,7 +109,7 @@ pub struct MultiBinaryBloomFilter {
 
 impl MultiBinaryBloomFilter {
     pub fn with_dimensions(filter_size: usize, hash_count: usize) -> Self {
-        let bytes_count = filter_size / 8 + if filter_size % 8 > 0 { 1 } else { 0 }; // we need 8 times less entries in the array, since we are using bytes. Careful that we have at least one element though
+        let bytes_count = filter_size / 8 + usize::from(!filter_size.is_multiple_of(8)); // we need 8 times less entries in the array, since we are using bytes. Careful that we have at least one element though
         Self {
             filter_size,
             bytes: vec![0; bytes_count],

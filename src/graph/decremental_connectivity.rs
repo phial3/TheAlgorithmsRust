@@ -4,7 +4,7 @@ use std::collections::HashSet;
 /// Meaning deletion of an edge (u,v) and checking whether two vertecies are still connected.
 ///
 /// # Complexity
-/// The preprocessing phase runs in O(n) time, where n is the the number of vertecies in the forest.
+/// The preprocessing phase runs in O(n) time, where n is the number of vertecies in the forest.
 /// Deletion runs in O(log n) and checking for connectivity runs in O(1) time.
 ///
 /// # Sources
@@ -224,7 +224,7 @@ mod tests {
             HashSet::from([7, 8]),
             HashSet::from([7]),
         ];
-        let mut dec_con = super::DecrementalConnectivity::new(adjacent.clone()).unwrap();
+        let mut dec_con = super::DecrementalConnectivity::new(adjacent).unwrap();
         dec_con.delete(2, 4);
     }
 
@@ -260,7 +260,7 @@ mod tests {
         dec_con2.delete(4, 1);
         assert!(!dec_con2.connected(1, 4).unwrap());
 
-        let mut dec_con3 = super::DecrementalConnectivity::new(adjacent.clone()).unwrap();
+        let mut dec_con3 = super::DecrementalConnectivity::new(adjacent).unwrap();
         dec_con3.delete(1, 4);
         assert!(!dec_con3.connected(4, 1).unwrap());
     }

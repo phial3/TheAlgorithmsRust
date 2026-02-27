@@ -184,11 +184,11 @@ where
     stack: Vec<&'a BinarySearchTree<T>>,
 }
 
-impl<'a, T> BinarySearchTreeIter<'a, T>
+impl<T> BinarySearchTreeIter<'_, T>
 where
     T: Ord,
 {
-    pub fn new(tree: &BinarySearchTree<T>) -> BinarySearchTreeIter<T> {
+    pub fn new(tree: &BinarySearchTree<T>) -> BinarySearchTreeIter<'_, T> {
         let mut iter = BinarySearchTreeIter { stack: vec![tree] };
         iter.stack_push_left();
         iter
@@ -212,8 +212,8 @@ where
             None
         } else {
             let node = self.stack.pop().unwrap();
-            if node.right.is_some() {
-                self.stack.push(node.right.as_ref().unwrap().deref());
+            if let Some(right_node) = &node.right {
+                self.stack.push(right_node.deref());
                 self.stack_push_left();
             }
             node.value.as_ref()

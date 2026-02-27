@@ -1,3 +1,4 @@
+mod ant_colony_optimization;
 mod astar;
 mod bellman_ford;
 mod bipartite_matching;
@@ -26,6 +27,7 @@ mod tarjans_ssc;
 mod topological_sort;
 mod two_satisfiability;
 
+pub use self::ant_colony_optimization::ant_colony_optimization;
 pub use self::astar::astar;
 pub use self::bellman_ford::bellman_ford;
 pub use self::bipartite_matching::BipartiteMatching;
@@ -38,7 +40,7 @@ pub use self::detect_cycle::DetectCycle;
 pub use self::dijkstra::dijkstra;
 pub use self::dinic_maxflow::DinicMaxFlow;
 pub use self::disjoint_set_union::DisjointSetUnion;
-pub use self::eulerian_path::EulerianPath;
+pub use self::eulerian_path::find_eulerian_path;
 pub use self::floyd_warshall::floyd_warshall;
 pub use self::ford_fulkerson::ford_fulkerson;
 pub use self::graph_enumeration::enumerate_graph;
